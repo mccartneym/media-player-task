@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Client player</string>
+    <string name="control_view_label">Custom client control view</string>
+</resources>
