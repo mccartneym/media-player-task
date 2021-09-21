@@ -1,7 +1,12 @@
 package uk.co.bishopit.player.view
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -13,7 +18,7 @@ import com.google.android.exoplayer2.util.MimeTypes
 import timber.log.Timber
 import uk.co.bishopit.player.R
 
-class CorePlayerView  @JvmOverloads constructor(
+class CorePlayerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -79,13 +84,19 @@ class CorePlayerView  @JvmOverloads constructor(
         }
     }
 
-//    @SuppressLint("InlinedApi")
-//    private fun hideSystemUi() {
-//        viewBinding.videoView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LOW_PROFILE
-//                or View.SYSTEM_UI_FLAG_FULLSCREEN
-//                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
-//    }
+    fun hideSystemUi() {
+        val window = (context as Activity).window
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, this).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+
+    private fun showSystemUI() {
+        val window = (context as Activity).window
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowInsetsControllerCompat(window, this).show(WindowInsetsCompat.Type.systemBars())
+    }
+
 }

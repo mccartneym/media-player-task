@@ -6,7 +6,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.google.android.exoplayer2.util.Util
 
 @Suppress("unused")
-internal class ExoPlayerLifecycleObserver(val playerView: CorePlayerView) : LifecycleObserver {
+internal class ExoPlayerLifecycleObserver(private val playerView: CorePlayerView) : LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStart() {
@@ -17,7 +17,7 @@ internal class ExoPlayerLifecycleObserver(val playerView: CorePlayerView) : Life
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
-//        hideSystemUi()
+        playerView.hideSystemUi()
         if ((Util.SDK_INT < 24 || playerView.player == null)) {
             playerView.initializePlayer()
         }
