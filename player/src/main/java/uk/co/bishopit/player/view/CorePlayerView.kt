@@ -1,6 +1,5 @@
 package uk.co.bishopit.player.view
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
@@ -27,14 +26,27 @@ class CorePlayerView @JvmOverloads constructor(
     private var playWhenReady = true
     private var currentWindow = 0
     private var playbackPosition = 0L
+    private var uri: String = ""
 
-    private val playbackStateListener: Player.EventListener = playbackStateListener()
-
-    fun initialise(lifecycle: Lifecycle) {
-        lifecycle.addObserver(ExoPlayerLifecycleObserver(this))
+    private val playbackStateListener: Player.EventListener = object : Player.EventListener {
+        override fun onPlaybackStateChanged(playbackState: Int) {
+            val state: String = when (playbackState) {
+                ExoPlayer.STATE_IDLE -> "Idle"
+                ExoPlayer.STATE_BUFFERING -> "Buffering"
+                ExoPlayer.STATE_READY -> "Ready"
+                ExoPlayer.STATE_ENDED -> "Ended"
+                else -> "Unknown"
+            }
+            Timber.d("Player state: $state")
+        }
     }
 
-    fun initializePlayer() {
+    fun initialise(lifecycle: Lifecycle, uri: String) {
+        lifecycle.addObserver(ExoPlayerLifecycleObserver(this))
+        this.uri = uri
+    }
+
+    internal fun initializePlayer() {
         val trackSelector = DefaultTrackSelector(context).apply {
             setParameters(buildUponParameters().setMaxVideoSizeSd())
         }
@@ -43,7 +55,7 @@ class CorePlayerView @JvmOverloads constructor(
             .build()
             .also { exoPlayer ->
                 val mediaItem = MediaItem.Builder()
-                    .setUri(context.getString(R.string.media_url_dash))
+                    .setUri(uri)
                     .setMimeType(MimeTypes.APPLICATION_MPD)
                     .build()
 
@@ -60,7 +72,7 @@ class CorePlayerView @JvmOverloads constructor(
             }
     }
 
-    fun releasePlayer() {
+    internal fun releasePlayer() {
         player?.run {
             playbackPosition = this.currentPosition
             currentWindow = this.currentWindowIndex
@@ -71,20 +83,7 @@ class CorePlayerView @JvmOverloads constructor(
         player = null
     }
 
-    private fun playbackStateListener() = object : Player.EventListener {
-        override fun onPlaybackStateChanged(playbackState: Int) {
-            val state: String = when (playbackState) {
-                ExoPlayer.STATE_IDLE -> "Idle"
-                ExoPlayer.STATE_BUFFERING -> "Buffering"
-                ExoPlayer.STATE_READY -> "Ready"
-                ExoPlayer.STATE_ENDED -> "Ended"
-                else -> "Unknown"
-            }
-            Timber.d("Player state: $state")
-        }
-    }
-
-    fun hideSystemUi() {
+    internal fun hideSystemUi() {
         val window = (context as Activity).window
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window, this).let { controller ->
@@ -93,7 +92,7 @@ class CorePlayerView @JvmOverloads constructor(
         }
     }
 
-    private fun showSystemUI() {
+    internal fun showSystemUI() {
         val window = (context as Activity).window
         WindowCompat.setDecorFitsSystemWindows(window, true)
         WindowInsetsControllerCompat(window, this).show(WindowInsetsCompat.Type.systemBars())

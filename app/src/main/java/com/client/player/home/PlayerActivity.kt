@@ -15,6 +15,6 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun initialisePlayer() {
         val playerView: CorePlayerView = findViewById(R.id.video_view)
-        playerView.initialise(lifecycle)
+        playerView.initialise(lifecycle, getString(R.string.media_url_dash))
     }
 }
