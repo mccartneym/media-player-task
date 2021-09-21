@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.client.player"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -30,22 +30,12 @@ dependencies {
     implementation project(':player')
 
     // Dagger & Hilt
-    implementation "com.google.dagger:hilt-android:$daggerVersion"
-    implementation 'androidx.appcompat:appcompat:1.3.1'
     kapt "com.google.dagger:hilt-compiler:$daggerVersion"
-    api "androidx.hilt:hilt-work:$daggerHiltVersion"
     kapt "androidx.hilt:hilt-compiler:$daggerHiltVersion"
-    androidTestImplementation "com.google.dagger:hilt-android-testing:$daggerVersion"
-    kaptAndroidTest "com.google.dagger:hilt-compiler:$daggerVersion"
-    testImplementation "com.google.dagger:hilt-android-testing:$daggerVersion"
+    implementation "com.google.dagger:hilt-android:$daggerVersion"
+    implementation "androidx.hilt:hilt-work:$daggerHiltVersion"
     kaptTest "com.google.dagger:hilt-compiler:$daggerVersion"
-
-    // TODO - see if I can remove these below
-    implementation 'com.google.android.exoplayer:exoplayer-core:2.12.0'
-    implementation 'com.google.android.exoplayer:exoplayer-dash:2.12.0'
-    implementation 'com.google.android.exoplayer:exoplayer-ui:2.12.0'
-
+    testImplementation "com.google.dagger:hilt-android-testing:$daggerVersion"
 
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.jakewharton.timber:timber:5.0.1'
 }

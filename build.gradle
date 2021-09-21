@@ -1,13 +1,13 @@
 buildscript {
     project.ext {
         compileSdkVersion = 30
-        minSdkVersion = 16
+        minSdkVersion = 21
         targetSdkVersion = 30
         buildToolsVersion = "30.0.3"
 
-        kotlin_version = "1.5.10"
+        kotlin_version = "1.5.30"
 
-        daggerVersion = '2.35.1'
+        daggerVersion = '2.37'
         daggerHiltVersion = "1.0.0"
     }
 
