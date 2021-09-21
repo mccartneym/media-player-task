@@ -7,11 +7,10 @@ class Initialiser @Inject constructor() {
 
     fun start() {
         initLogging()
-
-        Timber.i("Player initialised")
     }
 
     private fun initLogging() {
         Timber.plant(Timber.DebugTree())
+        Timber.d("Logging initialised")
     }
 }

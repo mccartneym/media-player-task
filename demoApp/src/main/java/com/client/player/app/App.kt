@@ -20,6 +20,5 @@ class App : Application() {
 
     private fun initPlayerLibrary() {
         playerInitialiser.start()
-        Timber.e("*** library initialised")
     }
 }
