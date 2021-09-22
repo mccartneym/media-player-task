@@ -1,11 +1,7 @@
 package uk.co.bishopit.player.view
 
-import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -15,7 +11,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.util.MimeTypes
 import timber.log.Timber
-import uk.co.bishopit.player.R
+
 
 class CorePlayerView @JvmOverloads constructor(
     context: Context,
@@ -83,19 +79,8 @@ class CorePlayerView @JvmOverloads constructor(
         player = null
     }
 
-    internal fun hideSystemUi() {
-        val window = (context as Activity).window
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, this).let { controller ->
-            controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
-    }
-
-    internal fun showSystemUI() {
-        val window = (context as Activity).window
-        WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowInsetsControllerCompat(window, this).show(WindowInsetsCompat.Type.systemBars())
+    fun hideSystemUi() {
+        uk.co.bishopit.player.util.hideSystemUi(context, this)
     }
 
 }
