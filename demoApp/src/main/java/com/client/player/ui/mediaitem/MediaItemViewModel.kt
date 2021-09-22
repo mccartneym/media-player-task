@@ -13,11 +13,11 @@ class MediaItemViewModel @Inject constructor() : ViewModel(), LifecycleObserver 
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStart() {
-        Timber.e("*** onStart")
+        Timber.i("onStart")
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStop() {
-        Timber.e("*** onStop")
+        Timber.i("onStop")
     }
 }

@@ -45,6 +45,7 @@ class CorePlayerView @JvmOverloads constructor(
     }
 
     internal fun preparePlayer() {
+        Timber.i("preparePlayer")
         val trackSelector = DefaultTrackSelector(context).apply {
             setParameters(buildUponParameters().setMaxVideoSizeSd())
         }
@@ -83,6 +84,7 @@ class CorePlayerView @JvmOverloads constructor(
     }
 
     fun hideSystemUi() {
+        Timber.i("hideSystemUi")
         hideSystemUi(context, this)
     }
 }
