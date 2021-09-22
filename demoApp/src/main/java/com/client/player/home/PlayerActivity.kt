@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.client.player.R
 import dagger.hilt.android.AndroidEntryPoint
-import uk.co.bishopit.player.view.CorePlayerView
 
 @AndroidEntryPoint
 class PlayerActivity : AppCompatActivity() {

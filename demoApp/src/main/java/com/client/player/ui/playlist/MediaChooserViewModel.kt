@@ -16,7 +16,7 @@ class MediaChooserViewModel @Inject constructor(private val itemRepository: Medi
     val playMediaItem = SingleLiveEvent<String>()
     val displayItemDescriptions = SingleLiveEvent<List<String>>()
 
-    lateinit var mediaItemList: List<UriMediaItem>
+    private lateinit var mediaItemList: List<UriMediaItem>
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStart() {

@@ -1,8 +1,7 @@
-package com.client.player.app;
+package com.client.player.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
-import timber.log.Timber
 import uk.co.bishopit.player.setup.Initialiser
 import javax.inject.Inject
 
