@@ -1,4 +1,4 @@
-package com.client.player.mediaitem
+package com.client.player.ui.mediaitem
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.client.player.R
-import com.client.player.databinding.FragmentMediaChooserBinding
 import com.client.player.databinding.FragmentMediaItemBinding
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import uk.co.bishopit.player.view.CorePlayerView
 
 @AndroidEntryPoint
 class MediaItemFragment: Fragment() {
 
     private val viewModel: MediaItemViewModel by viewModels()
+    private val args: MediaItemFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +35,8 @@ class MediaItemFragment: Fragment() {
 
     private fun FragmentMediaItemBinding.initialisePlayer() {
         Timber.e("*** initialising player")
-
-        // TODO - get FLOW back in VM which receives playerView events and can be responsible for hiding sytemUi....??
-        playerView.initialise(lifecycle, getString(R.string.media_url_dash))
+        val uri = args.mediaUri
+        playerView.initialise(lifecycle, uri)
         Timber.e("*** initialised player")
     }
 

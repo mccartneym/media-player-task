@@ -5,19 +5,23 @@
 
     <fragment
         android:id="@+id/mediaChooserFragment"
-        android:name="com.client.player.playlist.MediaChooserFragment"
+        android:name="com.client.player.ui.playlist.MediaChooserFragment"
         android:label="@string/app_name">
         <action
             android:id="@+id/action_mediaChooserFragment_to_mediaItemFragment"
             app:destination="@id/mediaItemFragment">
-            <argument
-                android:name="mediaUrl"
-                app:argType="string" />
+<!--            <argument-->
+<!--                android:name="mediaUrl"-->
+<!--                app:argType="string" />-->
         </action>
     </fragment>
 
     <fragment
         android:id="@+id/mediaItemFragment"
-        android:name="com.client.player.mediaitem.MediaItemFragment" />
+        android:name="com.client.player.ui.mediaitem.MediaItemFragment">
+        <argument
+            android:name="mediaUri"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

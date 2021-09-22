@@ -1,4 +1,4 @@
-package com.client.player.mediaitem
+package com.client.player.ui.mediaitem
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver

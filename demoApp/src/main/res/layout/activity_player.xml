@@ -6,7 +6,7 @@
 
 <!--    <androidx.fragment.app.FragmentContainerView-->
 <!--        android:id="@+id/fragment_container_view"-->
-<!--        android:name="com.client.player.playlist.MediaChooserFragment"-->
+<!--        android:name="com.client.player.ui.playlist.MediaChooserFragment"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent" />-->
 
