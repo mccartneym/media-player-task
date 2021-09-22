@@ -16,7 +16,7 @@ class MediaChooserFragment : Fragment() {
     private val viewModel: MediaChooserViewModel by viewModels()
 
     private val clickListener: MediaChooserAdapter.ItemClickListener = object : MediaChooserAdapter.ItemClickListener {
-        override fun onItemClick(view: View?, position: Int) {
+        override fun onItemClick(view: View, position: Int) {
             viewModel.onItemClicked(position)
         }
     }
@@ -36,7 +36,7 @@ class MediaChooserFragment : Fragment() {
         viewModel.displayItemDescriptions.observe(viewLifecycleOwner) {
             mediaItemList.adapter = MediaChooserAdapter(it, clickListener)
         }
-        viewModel.playMediaItem1.observe(viewLifecycleOwner) {
+        viewModel.playMediaItem.observe(viewLifecycleOwner) {
             val action = MediaChooserFragmentDirections.actionMediaChooserFragmentToMediaItemFragment(it)
             findNavController().navigate(action)
         }

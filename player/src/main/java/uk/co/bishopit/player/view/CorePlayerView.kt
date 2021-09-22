@@ -11,7 +11,8 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.util.MimeTypes
 import timber.log.Timber
-
+import uk.co.bishopit.player.util.getMimeType
+import uk.co.bishopit.player.util.hideSystemUi
 
 class CorePlayerView @JvmOverloads constructor(
     context: Context,
@@ -38,11 +39,12 @@ class CorePlayerView @JvmOverloads constructor(
     }
 
     fun initialise(lifecycle: Lifecycle, uri: String) {
-        lifecycle.addObserver(ExoPlayerLifecycleObserver(this))
+        Timber.i("initialise")
+        lifecycle.addObserver(PlayerLifecycleObserver(this))
         this.uri = uri
     }
 
-    internal fun initializePlayer() {
+    internal fun preparePlayer() {
         val trackSelector = DefaultTrackSelector(context).apply {
             setParameters(buildUponParameters().setMaxVideoSizeSd())
         }
@@ -50,17 +52,17 @@ class CorePlayerView @JvmOverloads constructor(
             .setTrackSelector(trackSelector)
             .build()
             .also { exoPlayer ->
-                val mediaItem = MediaItem.Builder()
-                    .setUri(uri)
-                    .setMimeType(MimeTypes.APPLICATION_MPD)
-                    .build()
-
+                val mediaItem = when (getMimeType(context, uri)) {
+                    "video/mp4",
+                    "audio/mpeg" -> MediaItem.fromUri(uri)
+                    else -> {
+                        MediaItem.Builder()
+                            .setUri(uri)
+                            .setMimeType(MimeTypes.APPLICATION_MPD)
+                            .build()
+                    }
+                }
                 exoPlayer.setMediaItem(mediaItem)
-//                val mediaItem = MediaItem.fromUri(getString(R.string.media_url_mp3))
-//                val mediaItem = MediaItem.fromUri(getString(R.string.media_url_mp4))
-//                exoPlayer.addMediaItem(mediaItem)
-//                val secondMediaItem = MediaItem.fromUri(getString(R.string.media_url_mp3));
-//                exoPlayer.addMediaItem(secondMediaItem);
                 exoPlayer.playWhenReady = playWhenReady
                 exoPlayer.seekTo(currentWindow, playbackPosition)
                 exoPlayer.addListener(playbackStateListener)
@@ -69,6 +71,7 @@ class CorePlayerView @JvmOverloads constructor(
     }
 
     internal fun releasePlayer() {
+        Timber.i("releasePlayer")
         player?.run {
             playbackPosition = this.currentPosition
             currentWindow = this.currentWindowIndex
@@ -80,7 +83,6 @@ class CorePlayerView @JvmOverloads constructor(
     }
 
     fun hideSystemUi() {
-        uk.co.bishopit.player.util.hideSystemUi(context, this)
+        hideSystemUi(context, this)
     }
-
 }
