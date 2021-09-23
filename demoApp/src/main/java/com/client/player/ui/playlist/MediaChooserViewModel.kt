@@ -1,9 +1,6 @@
 package com.client.player.ui.playlist
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.client.player.data.model.UriMediaItem
 import com.client.player.data.repository.MediaItemRepository
 import com.client.player.util.SingleLiveEvent
@@ -14,7 +11,7 @@ import javax.inject.Inject
 class MediaChooserViewModel @Inject constructor(private val itemRepository: MediaItemRepository) : ViewModel(), LifecycleObserver {
 
     val playMediaItem = SingleLiveEvent<String>()
-    val displayItemDescriptions = SingleLiveEvent<List<String>>()
+    val displayItemDescriptions = MutableLiveData<List<String>>()
 
     private lateinit var mediaItemList: List<UriMediaItem>
 
