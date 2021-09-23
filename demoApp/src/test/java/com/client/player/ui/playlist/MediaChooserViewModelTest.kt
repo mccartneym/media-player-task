@@ -3,7 +3,6 @@ package com.client.player.ui.playlist
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.client.player.data.model.UriMediaItem
-import com.client.player.data.repository.MediaItemRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
@@ -18,7 +17,7 @@ class MediaChooserViewModelTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val itemRepository: MediaItemRepository = mockk()
+    private val getMediaListInteractor: GetMediaListInteractor = mockk()
     private val itemDescriptionsObserver: Observer<List<String>> = mockk(relaxed = true)
     private val itemUriObserver: Observer<String> = mockk(relaxed = true)
 
@@ -27,10 +26,10 @@ class MediaChooserViewModelTest {
 
     @Before
     fun setUp() {
-        sut = MediaChooserViewModel(itemRepository)
+        sut = MediaChooserViewModel(getMediaListInteractor)
         sut.itemDescriptions.observeForever(itemDescriptionsObserver)
         sut.playMediaItem.observeForever(itemUriObserver)
-        every { itemRepository.getList() } returns MEDIA_ITEM_LIST
+        every { getMediaListInteractor.getMediaList() } returns MEDIA_ITEM_LIST
     }
 
     @Test
