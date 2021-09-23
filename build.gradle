@@ -18,8 +18,9 @@ buildscript {
         dagger_version = "2.37"
         dagger_hilt_version = "1.0.0"
 
-        junit_version = "4.12"
+        junit_version = "4.13.2"
         mockk_version = "1.12.0"
+        androidx_core_testing_version = "2.1.0"
     }
 
     repositories {

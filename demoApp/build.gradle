@@ -48,4 +48,9 @@ dependencies {
     implementation "com.google.android.material:material:$material_version"
 
     implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0'
+
+    implementation "io.mockk:mockk:$mockk_version"
+    implementation "junit:junit:$junit_version"
+    implementation "androidx.arch.core:core-testing:$androidx_core_testing_version"
+
 }

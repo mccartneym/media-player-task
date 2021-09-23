@@ -11,7 +11,7 @@ import javax.inject.Inject
 class MediaChooserViewModel @Inject constructor(private val itemRepository: MediaItemRepository) : ViewModel(), LifecycleObserver {
 
     val playMediaItem = SingleLiveEvent<String>()
-    val displayItemDescriptions = MutableLiveData<List<String>>()
+    val itemDescriptions = MutableLiveData<List<String>>()
 
     private lateinit var mediaItemList: List<UriMediaItem>
 
@@ -19,7 +19,7 @@ class MediaChooserViewModel @Inject constructor(private val itemRepository: Medi
     fun onStart() {
         mediaItemList = itemRepository.getList()
         val descriptionList: List<String> = mediaItemList.map { it.description }
-        displayItemDescriptions.postValue(descriptionList)
+        itemDescriptions.postValue(descriptionList)
     }
 
     fun onItemClicked(position: Int) {

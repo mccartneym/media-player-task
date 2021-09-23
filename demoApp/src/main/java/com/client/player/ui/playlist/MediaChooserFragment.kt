@@ -33,7 +33,7 @@ class MediaChooserFragment : Fragment() {
     }
 
     private fun FragmentMediaChooserBinding.observeViewModel() {
-        viewModel.displayItemDescriptions.observe(viewLifecycleOwner) {
+        viewModel.itemDescriptions.observe(viewLifecycleOwner) {
             mediaItemList.adapter = MediaChooserAdapter(it, clickListener)
         }
         viewModel.playMediaItem.observe(viewLifecycleOwner) {
