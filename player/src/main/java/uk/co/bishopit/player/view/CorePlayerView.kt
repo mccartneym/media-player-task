@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import uk.co.bishopit.player.util.getMimeType
 import uk.co.bishopit.player.util.hideSystemUi
+import uk.co.bishopit.player.util.showSystemUi
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -93,5 +94,10 @@ class CorePlayerView @JvmOverloads constructor(
     fun hideSystemUi() {
         Timber.i("hideSystemUi")
         hideSystemUi(context, this)
+    }
+
+    fun showSystemUi() {
+        Timber.i("showSystemUi")
+        showSystemUi(context, this)
     }
 }

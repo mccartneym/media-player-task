@@ -37,6 +37,7 @@ internal class PlayerLifecycleObserver @Inject constructor() : LifecycleObserver
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
+        playerView?.showSystemUi()
         if (Util.SDK_INT < 24) {
             releasePlayer()
         }

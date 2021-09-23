@@ -9,14 +9,6 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
-fun hideSystemUi(window: Window, view: View) {
-    WindowCompat.setDecorFitsSystemWindows(window, false)
-    WindowInsetsControllerCompat(window, view).let { controller ->
-        controller.hide(WindowInsetsCompat.Type.systemBars())
-        controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-    }
-}
-
 fun hideSystemUi(context: Context, view: View) {
     val activity = getActivity(context)
     if (activity != null) {
@@ -24,12 +16,27 @@ fun hideSystemUi(context: Context, view: View) {
     }
 }
 
-fun showSystemUI(window: Window, view: View) {
+fun showSystemUi(context: Context, view: View) {
+    val activity = getActivity(context)
+    if (activity != null) {
+        showSystemUI(activity.window, view)
+    }
+}
+
+private fun hideSystemUi(window: Window, view: View) {
+    WindowCompat.setDecorFitsSystemWindows(window, false)
+    WindowInsetsControllerCompat(window, view).let { controller ->
+        controller.hide(WindowInsetsCompat.Type.systemBars())
+        controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    }
+}
+
+private fun showSystemUI(window: Window, view: View) {
     WindowCompat.setDecorFitsSystemWindows(window, true)
     WindowInsetsControllerCompat(window, view).show(WindowInsetsCompat.Type.systemBars())
 }
 
-fun getActivity(context: Context): Activity? {
+private fun getActivity(context: Context): Activity? {
     return when (context) {
         is Activity -> context
         is ContextWrapper -> getActivity(context.baseContext)
