@@ -17,6 +17,9 @@ buildscript {
 
         dagger_version = "2.37"
         dagger_hilt_version = "1.0.0"
+
+        junit_version = "4.12"
+        mockk_version = "1.12.0"
     }
 
     repositories {
