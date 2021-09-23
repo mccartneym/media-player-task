@@ -10,10 +10,13 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.util.MimeTypes
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import uk.co.bishopit.player.util.getMimeType
 import uk.co.bishopit.player.util.hideSystemUi
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class CorePlayerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -24,6 +27,9 @@ class CorePlayerView @JvmOverloads constructor(
     private var currentWindow = 0
     private var playbackPosition = 0L
     private var uri: String = ""
+
+    @Inject
+    internal lateinit var lifecycleObserver: PlayerLifecycleObserver
 
     private val playbackStateListener: Player.EventListener = object : Player.EventListener {
         override fun onPlaybackStateChanged(playbackState: Int) {
@@ -40,7 +46,8 @@ class CorePlayerView @JvmOverloads constructor(
 
     fun initialise(lifecycle: Lifecycle, uri: String) {
         Timber.i("initialise")
-        lifecycle.addObserver(PlayerLifecycleObserver(this))
+        lifecycleObserver.setPlayer(this)
+        lifecycle.addObserver(lifecycleObserver)
         this.uri = uri
     }
 
