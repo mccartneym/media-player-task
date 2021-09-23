@@ -1,6 +1,6 @@
 # Player SDK
 
-This library is to demonstrate how to provider media player functionality encapsulated within a library module in an easy to use and extensible way.
+This library is to demonstrate how to provide media player functionality encapsulated within a library module in an easy to use and extensible way.
 
 There is a demo app: **demoApp** which provides an example of how to use this library.
 
