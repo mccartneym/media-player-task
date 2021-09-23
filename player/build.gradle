@@ -2,6 +2,13 @@ apply from: "${project.rootDir}/common.gradle"
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
+android {
+    defaultConfig {
+        versionCode 1
+        versionName "player-lib v0.1.0"
+    }
+}
+
 dependencies {
     ext.exoplayer_version = '2.15.0'
 
