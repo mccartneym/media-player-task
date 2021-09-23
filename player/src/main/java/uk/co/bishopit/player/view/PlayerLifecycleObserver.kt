@@ -3,11 +3,11 @@ package uk.co.bishopit.player.view
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import com.google.android.exoplayer2.util.Util
 import javax.inject.Inject
+import javax.inject.Named
 
 @Suppress("unused")
-internal class PlayerLifecycleObserver @Inject constructor() : LifecycleObserver {
+internal class PlayerLifecycleObserver @Inject constructor(@Named("SdkInt") var sdkInt: Int) : LifecycleObserver {
 
     private var playerView: CorePlayerView? = null
 
@@ -22,7 +22,7 @@ internal class PlayerLifecycleObserver @Inject constructor() : LifecycleObserver
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStart() {
-        if (Util.SDK_INT >= 24) {
+        if (sdkInt >= 24) {
             playerView?.preparePlayer()
         }
     }
@@ -30,7 +30,7 @@ internal class PlayerLifecycleObserver @Inject constructor() : LifecycleObserver
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun onResume() {
         playerView?.hideSystemUi()
-        if ((Util.SDK_INT < 24 || playerView?.player == null)) {
+        if ((sdkInt < 24 || playerView?.player == null)) {
             playerView?.preparePlayer()
         }
     }
@@ -38,14 +38,14 @@ internal class PlayerLifecycleObserver @Inject constructor() : LifecycleObserver
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun onPause() {
         playerView?.showSystemUi()
-        if (Util.SDK_INT < 24) {
+        if (sdkInt < 24) {
             releasePlayer()
         }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStop() {
-        if (Util.SDK_INT >= 24) {
+        if (sdkInt >= 24) {
             releasePlayer()
         }
     }
