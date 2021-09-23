@@ -1,2 +1,2 @@
 include ':demoApp'
-include ':player'
+//include ':player'
