@@ -1,0 +1,76 @@
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("./github.properties")))
+
+task sourceJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier "sources"
+}
+
+def versionNumber = "0.1.0"
+def getDebugVersionNumber = { -> return versionNumber }
+def getReleaseVersionNumber = { -> return versionNumber }
+def getGroupId = { -> return "uk.co.bishopit" }
+def getArtifactId = { -> return "player" }
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId getGroupId()
+            artifactId getArtifactId()
+            version getReleaseVersionNumber()
+            artifact(sourceJar)
+            artifact("$buildDir/outputs/aar/player-release.aar")
+
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                // Iterate over the implementation dependencies (we don't want the test ones), adding a <dependency> node for each
+                configurations.implementation.allDependencies.each {
+                    // Ensure dependencies such as fileTree are not included in the pom.
+                    if (it.name != 'unspecified') {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
+        }
+        debug(MavenPublication) {
+            groupId getGroupId()
+            artifactId "${getArtifactId()}-debug"
+            version getDebugVersionNumber()
+            artifact("$buildDir/outputs/aar/player-debug.aar")
+
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+
+                // Iterate over the implementation dependencies (we don't want the test ones), adding a <dependency> node for each
+                configurations.implementation.allDependencies.each {
+                    // Ensure dependencies such as fileTree are not included in the pom.
+                    if (it.name != 'unspecified') {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url "https://maven.pkg.github.com/mccartneym/media-player-task"
+
+            credentials {
+                /** Create github.properties in root project folder file with
+                 ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN
+                 ** Set env variable GPR_USER & GPR_API_KEY if not adding a properties file**/
+
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
+}

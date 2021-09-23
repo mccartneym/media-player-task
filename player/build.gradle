@@ -1,6 +1,8 @@
 apply from: "${project.rootDir}/common.gradle"
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'maven-publish'
+apply from: 'maven-publish.gradle'
 
 android {
     defaultConfig {
