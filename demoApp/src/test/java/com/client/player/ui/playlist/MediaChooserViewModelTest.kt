@@ -76,11 +76,11 @@ class MediaChooserViewModelTest {
     }
 
     companion object {
-        private val MEDIA_ITEM_LIST = listOf<UriMediaItem>(
+        private val MEDIA_ITEM_LIST = listOf(
             UriMediaItem("uri1", "desc1"),
             UriMediaItem("uri2", "desc2"),
             UriMediaItem("uri3", "desc3")
         )
-        private val MEDIA_DESCRIPTION_LIST = listOf<String>("desc1", "desc2", "desc3")
+        private val MEDIA_DESCRIPTION_LIST = listOf("desc1", "desc2", "desc3")
     }
 }

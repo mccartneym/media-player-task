@@ -23,6 +23,6 @@ class MediaChooserViewModel @Inject constructor(private val getMediaListInteract
 
     fun onItemClicked(position: Int) {
         val uri = mediaItemList[position].uri
-        playMediaItem.postValue(uri)
+        playMediaItem.value = uri
     }
 }
